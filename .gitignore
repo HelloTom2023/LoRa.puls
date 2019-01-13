@@ -1,3 +1,13 @@
+#user define
+*.cproject
+*.project
+*.settings
+DebugConfig/
+*.crf
+*.lst
+*.uvoptx
+*.uvguix.*
+
 # Prerequisites
 *.d
 

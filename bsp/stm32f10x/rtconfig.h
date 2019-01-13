@@ -167,6 +167,9 @@
 #define SOC_STM32F1
 #define BSP_USING_I2C
 #define RT_USING_SPI1
+#define RT_USING_SPI2
+#define RT_USING_SPI3
+#define USING_SPI_BUS_DEBUG
 #define RT_USING_UART1
 
 #endif
