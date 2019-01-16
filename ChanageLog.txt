@@ -1,7 +1,16 @@
+Version : V0.0.5
+ChangeLog :
+1.device.c : delete device.c debug information.
+2.stm32f10x_spi_bus.c ：implements SPI CS pin logic for initiation ,take and release.
+3.stm32f10x_spi_bus.h : add one element for stm32f10x_spi_cs_config,used for configuration CS pin Clock.
+Autor : Mingfen XIAO(mingfen.xiao@qq.com)	
+Data  : 2019.01.16
+/*********************************************************************************************************************/
 Version : V0.0.4
 ChangeLog :
 1.stm32f10x_spi_bus : implements spi bus function. /*SPI2 test OK*/
 2.Kconfig ： add SPI debug function in env. And enable this function in env. ;located : \bsp\stm32f10x\drivers
+3.gitignore : add some rules with ignore some files.
 Autor : Mingfen XIAO(mingfen.xiao@qq.com)	
 Data  : 2019.01.13
 /*********************************************************************************************************************/

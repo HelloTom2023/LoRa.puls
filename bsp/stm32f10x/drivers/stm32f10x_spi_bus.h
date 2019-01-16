@@ -13,6 +13,7 @@
 
 typedef struct stm32f10x_spi_cs_config_tag
 {
+	uint32_t RCC_APB2Periph;
 	GPIO_TypeDef * GPIOx;
     uint16_t GPIO_Pin;
 }stm32f10x_spi_cs_config;

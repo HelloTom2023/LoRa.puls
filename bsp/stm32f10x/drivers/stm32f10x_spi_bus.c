@@ -248,15 +248,29 @@ static rt_err_t stm32f10x_spi_bus_WriteReadData(SPI_TypeDef* SPIx, const unsigne
 	rt_err_t ret = RT_EOK;
 	int i = 0x00;
 
-	GPIO_WriteBit(SPI2_GPIO,SPI2_GPIO_NSS,	Bit_RESET);/*Enable CS Pin. Note : CS PIN is active low*/
-
-	for(i = 0x00; i < length; i++)
+	if(RT_NULL == WriteData) /*Only read data*/
 	{
-		ret = stm32f10x_spi_bus_WriteReadByte(SPIx, *(WriteData+i), (ReadData+i) );
+		for(i = 0x00; i < length; i++)
+		{
+			ret = stm32f10x_spi_bus_WriteReadByte(SPIx, 0xFF, (ReadData+i) );
+		}
+	}
+	else if(RT_NULL == ReadData) /*only write data */
+	{
+		unsigned char ReadTemp = 0x00;
+		for(i = 0x00; i < length; i++)
+		{
+			ret = stm32f10x_spi_bus_WriteReadByte(SPIx, *(WriteData+i), &ReadTemp ); /*read data ignore*/
+		}
+	}
+	else
+	{
+		for(i = 0x00; i < length; i++)
+		{
+			ret = stm32f10x_spi_bus_WriteReadByte(SPIx, *(WriteData+i), (ReadData+i) );
+		}
 	}
 
-	GPIO_WriteBit(SPI2_GPIO,SPI2_GPIO_NSS,	Bit_SET);/*Disable CS Pin*/
-    
     return ret;
 }
 
@@ -397,17 +411,23 @@ static rt_uint32_t stm32f10x_spi1_bus_transfer_message(struct rt_spi_device *dev
 static rt_err_t stm32f10x_spi2_bus_config(struct rt_spi_device *device, struct rt_spi_configuration *configuration)
 {
 	rt_err_t ret = RT_EOK;
+	stm32f10x_spi_cs_config *spi_device_cs = (stm32f10x_spi_cs_config*)device->parent.user_data;/*get user data*/
 
 	spi_bus_printf("enter stm32f10x_spi_bus_config function\r\n");
 
-	/*Configure cs pin.*/
+	/*Configuration SPI CS pin base on device*/
 	{
 		GPIO_InitTypeDef GPIO_InitStructure;
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;  // cs
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-		GPIO_Init(GPIOB, &GPIO_InitStructure);
-		GPIO_SetBits(GPIOB,GPIO_Pin_12);
+
+		/*Initiation CS RCC*/
+		RCC_APB2PeriphClockCmd(spi_device_cs->RCC_APB2Periph | RCC_APB2Periph_AFIO, ENABLE);
+
+		/*Initiation CS port and mode*/
+		GPIO_InitStructure.GPIO_Pin = spi_device_cs->GPIO_Pin;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;
+		GPIO_InitStructure.GPIO_Speed =GPIO_Speed_50MHz;
+		GPIO_Init(spi_device_cs->GPIOx, &GPIO_InitStructure);
+		GPIO_SetBits(spi_device_cs->GPIOx,spi_device_cs->GPIO_Pin); /*release CS*/
 	}
 
 	/*Configure SPI baud rate prescaler */
@@ -511,10 +531,21 @@ static rt_err_t stm32f10x_spi2_bus_config(struct rt_spi_device *device, struct r
 static rt_uint32_t stm32f10x_spi2_bus_transfer_message(struct rt_spi_device *device, struct rt_spi_message *message)
 {
 	rt_uint32_t ret = 0x00;
+	stm32f10x_spi_cs_config *spi_device_cs = (stm32f10x_spi_cs_config*)device->parent.user_data;/*get user data*/
 
 	spi_bus_printf("Enter stm32f10x_spi2_bus_transfer_message function\r\n");
 
+	if(message->cs_take)
+	{
+		GPIO_WriteBit(spi_device_cs->GPIOx,spi_device_cs->GPIO_Pin,	Bit_RESET);/*take CS Pin. Note : CS PIN is active low*/
+	}
+
 	ret = stm32f10x_spi_bus_WriteReadData(SPI2, message->send_buf, message->recv_buf, message->length);
+
+	if(message->cs_release)
+	{
+		GPIO_WriteBit(spi_device_cs->GPIOx,spi_device_cs->GPIO_Pin,	Bit_SET);/*release CS Pin. Note : CS PIN is active low*/
+	}
 
 	spi_bus_printf("Exit stm32f10x_spi2_bus_transfer_message function\r\n");
 	return ret;
@@ -643,7 +674,12 @@ static rt_err_t stm32f10x_spi_bus_init(void)
 }
 
 static struct rt_spi_device spi_device;
-static stm32f10x_spi_cs_config spi_device_cs;
+static stm32f10x_spi_cs_config spi_device_cs =
+{
+		RCC_APB2Periph_GPIOB,
+		GPIOB,
+		GPIO_Pin_12
+};
 static rt_err_t stm32f10x_spi_device_init(void)
 {
 	rt_err_t ret = RT_EOK;
