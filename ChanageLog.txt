@@ -1,3 +1,13 @@
+﻿Version : V0.0.6
+ChangeLog :
+1.Kconfig : add lora device list,eg sx1278.
+2.components : add components for LoRa
+3.LoRa_spi_sx1278 : Coding,sx1278 spi communication test ok.
+4.new files ：create some files of LoRa_core.c,LoRa_core.h,LoRa_pin_sx1278.c and LoRa_pin_sx1278.h
+5.stm32_spi_bus.c : add some debug information.
+Autor : Mingfen XIAO(mingfen.xiao@qq.com)	
+Data  : 2019.02.24
+/*********************************************************************************************************************/
 Version : V0.0.5
 ChangeLog :
 1.device.c : delete device.c debug information.

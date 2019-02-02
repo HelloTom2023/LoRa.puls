@@ -7,6 +7,8 @@ DebugConfig/
 *.lst
 *.uvoptx
 *.uvguix.*
+*.__i
+*._ia
 
 # Prerequisites
 *.d

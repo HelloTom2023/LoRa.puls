@@ -533,7 +533,8 @@ static rt_uint32_t stm32f10x_spi2_bus_transfer_message(struct rt_spi_device *dev
 	rt_uint32_t ret = 0x00;
 	stm32f10x_spi_cs_config *spi_device_cs = (stm32f10x_spi_cs_config*)device->parent.user_data;/*get user data*/
 
-	spi_bus_printf("Enter stm32f10x_spi2_bus_transfer_message function\r\n");
+	//spi_bus_printf("Enter stm32f10x_spi2_bus_transfer_message function\r\n");
+	//spi_bus_printf("test debug info : port index is 0x%lx,pin index is 0x%lx\r\n",spi_device_cs->GPIOx,spi_device_cs->GPIO_Pin);
 
 	if(message->cs_take)
 	{
@@ -547,7 +548,7 @@ static rt_uint32_t stm32f10x_spi2_bus_transfer_message(struct rt_spi_device *dev
 		GPIO_WriteBit(spi_device_cs->GPIOx,spi_device_cs->GPIO_Pin,	Bit_SET);/*release CS Pin. Note : CS PIN is active low*/
 	}
 
-	spi_bus_printf("Exit stm32f10x_spi2_bus_transfer_message function\r\n");
+	//spi_bus_printf("Exit stm32f10x_spi2_bus_transfer_message function\r\n");
 	return ret;
 }
 
@@ -753,8 +754,6 @@ static void stm32f10x_spi_bus_test_sample(int argc, char *argv[])
 		rt_spi_transfer(spi_device, SendData, RecData, 6);
 		spi_bus_printf("use rt_spi_send_then_recv() write w25q id is %x, read w25q ID is:%x %x\n", SendData[0],RecData[4],RecData[5]);
 	}
-
-
 }
 
 MSH_CMD_EXPORT(stm32f10x_spi_bus_test_sample, stm32f10x spi bus test sample);

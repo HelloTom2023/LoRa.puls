@@ -79,6 +79,9 @@
 #define RT_USING_PIN
 #define RT_USING_SPI
 #define RT_USING_W25QXX
+#define RT_USING_LORA
+#define RT_USING_LORA_DEBUG
+#define RT_USING_LORA_SX1278
 
 /* Using WiFi */
 

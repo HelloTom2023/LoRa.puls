@@ -227,6 +227,21 @@ config RT_USING_SPI
             bool "Using RW009/007 SPI Wi-Fi wireless interface"
             select RT_USING_LWIP
             default n
+		
+		menu "Using LoRa"
+			config RT_USING_LORA
+			default y
+			
+			config RT_USING_LORA_DEBUG
+			bool "Enable Debug Function"
+			default n 
+	
+			config RT_USING_LORA_SX1278
+			bool "Using SX1278"
+			default n               
+					
+		endmenu
+		
     endif
 
 config RT_USING_WDT

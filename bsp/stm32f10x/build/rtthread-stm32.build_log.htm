@@ -21,25 +21,44 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
 Dialog DLL:      TARMSTM.DLL V1.66.0.0
  
 <h2>Project:</h2>
-E:\00_snake.xiao\LoRa.puls\bsp\stm32f10x\project.uvprojx
-Project File Date:  01/13/2019
+E:\00_snake.xiao\LoRa\LoRa.puls\bsp\stm32f10x\project.uvprojx
+Project File Date:  02/20/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'D:\Keil\ARM\ARMCC\Bin'
 Build target 'rtthread-stm32'
-compiling stm32f10x_spi_bus.c...
+compiling LoRa_spi_sx1278.c...
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(138): warning:  #940-D: missing return statement at end of non-void function "LoRa_device_sx1278_reset" 
+  }
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(164): warning:  #177-D: variable "bus"  was declared but never referenced
+  		struct rt_spi_bus *bus;
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(240): warning:  #940-D: missing return statement at end of non-void function "LoRa_device_sx1278_init" 
+  }
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(245): warning:  #940-D: missing return statement at end of non-void function "rt_hw_sx1278_init" 
+  }
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(76): warning:  #177-D: function "LoRa_sx1278_open"  was declared but never referenced
+  static rt_err_t  LoRa_sx1278_open(rt_device_t dev, rt_uint16_t oflag)
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(85): warning:  #177-D: function "LoRa_sx1278_close"  was declared but never referenced
+  static  rt_err_t  LoRa_sx1278_close(rt_device_t dev)
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(94): warning:  #177-D: function "LoRa_sx1278_read"  was declared but never referenced
+  static rt_size_t LoRa_sx1278_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(104): warning:  #177-D: function "LoRa_sx1278_write"  was declared but never referenced
+  static rt_size_t LoRa_sx1278_write(rt_device_t dev, rt_off_t pos, const void *buffer, rt_size_t size)
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(114): warning:  #177-D: function "LoRa_sx1278_control"  was declared but never referenced
+  static rt_err_t  LoRa_sx1278_control(rt_device_t dev, int cmd, void *args)
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c: 9 warnings, 0 errors
 linking...
-Program Size: Code=81280 RO-data=9568 RW-data=716 ZI-data=4964  
+Program Size: Code=81916 RO-data=9624 RW-data=740 ZI-data=5172  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin .\build\rtthread-stm32.axf --output rtthread.bin
-".\build\rtthread-stm32.axf" - 0 Error(s), 0 Warning(s).
+".\build\rtthread-stm32.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  E:\00_snake.xiao\LoRa.puls\bsp\stm32f10x\RTE\_rtthread-stm32
+  E:\00_snake.xiao\LoRa\LoRa.puls\bsp\stm32f10x\RTE\_rtthread-stm32
   D:\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
