@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\build\rtthread-stm32.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\build\rtthread-stm32.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Sun Feb 24 20:01:32 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060422: Last Updated: Sun Feb 24 20:24:53 2019
 <BR><P>
 <H3>Maximum Stack Usage =        672 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -864,11 +864,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> i2c.o(.rti_fn.1)
 </UL>
-<P><STRONG><a name="[b0]"></a>rt_hw_stm32f10x_spi_init</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, stm32f10x_spi_bus.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 576<LI>Call Chain = rt_hw_stm32f10x_spi_init &rArr; stm32f10x_spi_device_init &rArr; rt_spi_bus_attach_device &rArr; rt_spidev_device_init &rArr; rt_device_register &rArr; rt_device_find &rArr; rt_exit_critical &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
+<P><STRONG><a name="[b0]"></a>rt_hw_stm32f10x_spi_init</STRONG> (Thumb, 10 bytes, Stack size 8 bytes, stm32f10x_spi_bus.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 560<LI>Call Chain = rt_hw_stm32f10x_spi_init &rArr; stm32f10x_spi_bus_init &rArr; rt_spi_bus_register &rArr; rt_spi_bus_device_init &rArr; rt_device_register &rArr; rt_device_find &rArr; rt_exit_critical &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
 </UL>
-<BR>[Calls]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_device_init
-<LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_bus_init
+<BR>[Calls]<UL><LI><a href="#[140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_bus_init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x_spi_bus.o(.rti_fn.1)
 </UL>
@@ -3980,7 +3979,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_hw_i2c_init
 </UL>
 
-<P><STRONG><a name="[257]"></a>LoRa_device_sx1278_init</STRONG> (Thumb, 262 bytes, Stack size 32 bytes, lora_spi_sx1278.o(.text))
+<P><STRONG><a name="[257]"></a>LoRa_device_sx1278_init</STRONG> (Thumb, 270 bytes, Stack size 32 bytes, lora_spi_sx1278.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 600<LI>Call Chain = LoRa_device_sx1278_init &rArr; rt_spi_transfer &rArr; rt_mutex_release &rArr; rt_thread_control &rArr; rt_thread_startup &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
 </UL>
 <BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_transfer
@@ -4098,7 +4097,8 @@ Global Symbols
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_memset
 <LI><a href="#[26b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spidev_device_init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_device_init
+<BR>[Called By]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_bus_test_sample
+<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stm32f10x_spi_device_init
 <LI><a href="#[257]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LoRa_device_sx1278_init
 </UL>
 
@@ -5821,20 +5821,17 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_hw_stm32f10x_spi_init
 </UL>
 
-<P><STRONG><a name="[144]"></a>stm32f10x_spi_device_init</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, stm32f10x_spi_bus.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 568<LI>Call Chain = stm32f10x_spi_device_init &rArr; rt_spi_bus_attach_device &rArr; rt_spidev_device_init &rArr; rt_device_register &rArr; rt_device_find &rArr; rt_exit_critical &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
-</UL>
-<BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_bus_attach_device
+<P><STRONG><a name="[144]"></a>stm32f10x_spi_device_init</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, stm32f10x_spi_bus.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_bus_attach_device
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_kprintf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_hw_stm32f10x_spi_init
-</UL>
 
-<P><STRONG><a name="[b7]"></a>stm32f10x_spi_bus_test_sample</STRONG> (Thumb, 1048 bytes, Stack size 48 bytes, stm32f10x_spi_bus.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 616<LI>Call Chain = stm32f10x_spi_bus_test_sample &rArr; rt_spi_transfer &rArr; rt_mutex_release &rArr; rt_thread_control &rArr; rt_thread_startup &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
+<P><STRONG><a name="[b7]"></a>stm32f10x_spi_bus_test_sample</STRONG> (Thumb, 1244 bytes, Stack size 64 bytes, stm32f10x_spi_bus.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 632<LI>Call Chain = stm32f10x_spi_bus_test_sample &rArr; rt_spi_transfer &rArr; rt_mutex_release &rArr; rt_thread_control &rArr; rt_thread_startup &rArr; rt_schedule &rArr; _rt_scheduler_stack_check &rArr; list_thread &rArr; object_split &rArr; rt_kprintf &rArr; rt_vsnprintf &rArr; print_number
 </UL>
 <BR>[Calls]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_transfer
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_configure
+<LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_spi_bus_attach_device
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_device_find
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rt_kprintf
 </UL>

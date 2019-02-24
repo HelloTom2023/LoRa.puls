@@ -161,7 +161,7 @@ rt_err_t LoRa_device_sx1278_init(const char * LoRa_device_name, const char * spi
     if(rt_spi_device == RT_NULL)
     {
     	rt_device_t spi_bus;
-		struct rt_spi_bus *bus;
+
         LoRa_printf("LoRa spi device %s not found!, shall be attach to system...\r\n", LoRa_device_name);
 
         /* get physical spi bus */
@@ -231,12 +231,16 @@ rt_err_t LoRa_device_sx1278_init(const char * LoRa_device_name, const char * spi
 		if(0x6C != RecData[1])
 		{
 			LoRa_printf("LoRa sx1278 initialization failed.\r\n ");
+			ret = -RT_ERROR;
 		}
 		else
 		{
 			LoRa_printf("LoRa sx1278 initialization successful.\r\n ");
 		}
     }
+
+    ret = RT_EOK;
+	return ret;
 }
 
 int rt_hw_sx1278_init(void)

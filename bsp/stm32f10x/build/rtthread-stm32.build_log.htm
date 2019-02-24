@@ -30,11 +30,7 @@ Build target 'rtthread-stm32'
 compiling LoRa_spi_sx1278.c...
 ..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(138): warning:  #940-D: missing return statement at end of non-void function "LoRa_device_sx1278_reset" 
   }
-..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(164): warning:  #177-D: variable "bus"  was declared but never referenced
-  		struct rt_spi_bus *bus;
-..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(240): warning:  #940-D: missing return statement at end of non-void function "LoRa_device_sx1278_init" 
-  }
-..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(245): warning:  #940-D: missing return statement at end of non-void function "rt_hw_sx1278_init" 
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(249): warning:  #940-D: missing return statement at end of non-void function "rt_hw_sx1278_init" 
   }
 ..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(76): warning:  #177-D: function "LoRa_sx1278_open"  was declared but never referenced
   static rt_err_t  LoRa_sx1278_open(rt_device_t dev, rt_uint16_t oflag)
@@ -46,12 +42,16 @@ compiling LoRa_spi_sx1278.c...
   static rt_size_t LoRa_sx1278_write(rt_device_t dev, rt_off_t pos, const void *buffer, rt_size_t size)
 ..\..\components\drivers\LoRa\LoRa_spi_sx1278.c(114): warning:  #177-D: function "LoRa_sx1278_control"  was declared but never referenced
   static rt_err_t  LoRa_sx1278_control(rt_device_t dev, int cmd, void *args)
-..\..\components\drivers\LoRa\LoRa_spi_sx1278.c: 9 warnings, 0 errors
+..\..\components\drivers\LoRa\LoRa_spi_sx1278.c: 7 warnings, 0 errors
+compiling stm32f10x_spi_bus.c...
+drivers\stm32f10x_spi_bus.c(684): warning:  #177-D: function "stm32f10x_spi_device_init"  was declared but never referenced
+  static rt_err_t stm32f10x_spi_device_init(void)
+drivers\stm32f10x_spi_bus.c: 1 warning, 0 errors
 linking...
-Program Size: Code=81916 RO-data=9624 RW-data=740 ZI-data=5172  
+Program Size: Code=82204 RO-data=9624 RW-data=740 ZI-data=5172  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin .\build\rtthread-stm32.axf --output rtthread.bin
-".\build\rtthread-stm32.axf" - 0 Error(s), 9 Warning(s).
+".\build\rtthread-stm32.axf" - 0 Error(s), 8 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   E:\00_snake.xiao\LoRa\LoRa.puls\bsp\stm32f10x\RTE\_rtthread-stm32

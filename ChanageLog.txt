@@ -1,4 +1,10 @@
-﻿Version : V0.0.6
+﻿Version : V0.0.7
+ChangeLog :
+1.stm32f10x_spi_bus.c : modified the spi sample code.
+Autor : Mingfen XIAO(mingfen.xiao@qq.com)	
+Data  : 2019.02.24
+/*********************************************************************************************************************/
+Version : V0.0.6
 ChangeLog :
 1.Kconfig : add lora device list,eg sx1278.
 2.components : add components for LoRa

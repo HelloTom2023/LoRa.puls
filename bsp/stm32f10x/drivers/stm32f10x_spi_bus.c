@@ -674,8 +674,8 @@ static rt_err_t stm32f10x_spi_bus_init(void)
     return ret;
 }
 
-static struct rt_spi_device spi_device;
-static stm32f10x_spi_cs_config spi_device_cs =
+static struct rt_spi_device spi2_device;
+static stm32f10x_spi_cs_config spi2_device_cs =
 {
 		RCC_APB2Periph_GPIOB,
 		GPIOB,
@@ -697,12 +697,12 @@ static rt_err_t stm32f10x_spi_device_init(void)
 	 * baud rate :
 	 *
 	 * */
-	spi_device.bus = &spi2_bus;
-	spi_device.config.data_width = 8;
-	spi_device.config.max_hz = 1;
-	spi_device.config.mode = RT_SPI_MODE_0 | RT_SPI_MSB | RT_SPI_MASTER;
+	spi2_device.bus = &spi2_bus;
+	spi2_device.config.data_width = 8;
+	spi2_device.config.max_hz = 1;
+	spi2_device.config.mode = RT_SPI_MODE_0 | RT_SPI_MSB | RT_SPI_MASTER;
 
-	ret = rt_spi_bus_attach_device(&spi_device, spi_device_name, "spi2", (void*)&spi_device_cs);
+	ret = rt_spi_bus_attach_device(&spi2_device, spi_device_name, "spi2", (void*)&spi2_device_cs);
 	if (ret != RT_EOK)
 	{
 		spi_bus_printf("spi device[%s] register failed !\r\n",spi_device_name);
@@ -719,41 +719,91 @@ static rt_err_t stm32f10x_spi_device_init(void)
 int rt_hw_stm32f10x_spi_init(void)
 {
 	stm32f10x_spi_bus_init();
-	stm32f10x_spi_device_init();
+	//stm32f10x_spi_device_init();
 	return 0x00;
 }
 
-static void stm32f10x_spi_bus_test_sample(int argc, char *argv[])
+static rt_err_t  stm32f10x_spi_bus_test_sample(int argc, char *argv[])
 {
-	const char name[] = "spi20";
+	const char spi_bus_name[] = "spi2";
+	const char spi_device_name[] = "w25q";
 	struct rt_spi_configuration spi_cfg;
-	struct rt_spi_device* spi_device;
+    struct rt_spi_device *rt_spi_device;
+    rt_err_t ret = RT_EOK;
+    
+	/*find device in the device list*/
+	rt_spi_device = (struct rt_spi_device *)rt_device_find(spi_device_name);
+	if(rt_spi_device == RT_NULL)
+	{
+		rt_device_t spi_bus;
+
+		spi_bus_printf("spi device %s not found!, shall be attach to system...\r\n", spi_device_name);
+
+		/* get physical spi bus */
+		spi_bus = rt_device_find("spi2");
+		if (spi_bus != RT_NULL && spi_bus->type == RT_Device_Class_SPIBUS)
+		{
+			/* Init spi device
+			 * Setting SPI parameters.
+			 * Inlcude :
+			 * Data width:
+			 * mode :
+			 * CPOL :
+			 * CPHA :
+			 * Frist bit :
+			 * baud rate :
+			 *
+			 * */
+			spi2_device.bus = (struct rt_spi_bus *)spi_bus;
+			spi2_device.config.data_width = 8;
+			spi2_device.config.max_hz = 1;
+			spi2_device.config.mode = RT_SPI_MODE_0 | RT_SPI_MSB | RT_SPI_MASTER;
+
+			ret = rt_spi_bus_attach_device(&spi2_device, spi_device_name, spi_bus_name, (void*)&spi2_device_cs);
+			if (ret != RT_EOK)
+			{
+				spi_bus_printf("LoRa device[%s] register failed !\r\n",spi_device_name);
+				return ret;
+			}
+			else
+			{
+				spi_bus_printf("LoRa device[%s] register successful !\r\n",spi_device_name);
+			}
+		}
+		else /*not found the spi bus*/
+		{
+			return -RT_ERROR;
+		}
+	}
 
 	spi_cfg.data_width = 8;
 	spi_cfg.max_hz = 1;
 	spi_cfg.mode = RT_SPI_MODE_3 | RT_SPI_MSB | RT_SPI_MASTER;
 
-	spi_device = (struct rt_spi_device *)rt_device_find(name);
-	if (!spi_device)
+	rt_spi_device = (struct rt_spi_device *)rt_device_find(spi_device_name);
+	if (!rt_spi_device)
 	{
-		spi_bus_printf("stm32f10x spi bus test sample run failed! can't find %s device!\n", name);
+		spi_bus_printf("stm32f10x spi bus test sample run failed! can't find %s device!\n", spi_device_name);
+		return -RT_ERROR;
 	}
 	else
 	{
-		spi_bus_printf("stm32f10x spi bus test sample run successful! %s device exist is system!\n", name);
+		spi_bus_printf("stm32f10x spi bus test sample run successful! %s device exist is system!\n", spi_device_name);
 	}
 
-	spi_bus_printf("the device type is 0x%x\n", spi_device->bus->lock.parent.parent.type);
+	spi_bus_printf("the device type is 0x%x\n", rt_spi_device->bus->lock.parent.parent.type);
 
-	rt_spi_configure(spi_device,&spi_cfg);
+	rt_spi_configure(rt_spi_device,&spi_cfg);
 
 	{
         /*Test code*/
 		unsigned char SendData[] = {0x90,0x00,0x00,0x00,0xff,0xff};
 		unsigned char RecData[] = {0x00,0x00,0x00,0x00,0x00,0x00};
-		rt_spi_transfer(spi_device, SendData, RecData, 6);
+		rt_spi_transfer(rt_spi_device, SendData, RecData, 6);
 		spi_bus_printf("use rt_spi_send_then_recv() write w25q id is %x, read w25q ID is:%x %x\n", SendData[0],RecData[4],RecData[5]);
 	}
+	ret = RT_EOK;
+	return ret;
 }
 
 MSH_CMD_EXPORT(stm32f10x_spi_bus_test_sample, stm32f10x spi bus test sample);
